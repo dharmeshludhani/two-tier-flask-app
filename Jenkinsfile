@@ -1,65 +1,42 @@
-@Library("Shared") _
 pipeline{
-    
-    agent { label "dev"};
+    agent any;
     
     stages{
-        stage("Code Clone"){
+        stage("Project Cloning"){
             steps{
-               script{
-                   clone("https://github.com/LondheShubham153/two-tier-flask-app.git", "master")
-               }
+                echo "Project Cloning is in Progress!!"
+                git url:"https://github.com/dharmeshludhani/two-tier-flask-app.git", branch:"master"
             }
         }
-        stage("Trivy File System Scan"){
+        stage("Image Building"){
             steps{
-                script{
-                    trivy_fs()
-                }
+                echo "Conatiner Image is in Building Process!!"
+                sh "docker build -t 2-tier-app-latest ."
             }
         }
-        stage("Build"){
+        stage("Pushing image to Docker hub"){
             steps{
-                sh "docker build -t two-tier-flask-app ."
-            }
-            
-        }
-        stage("Test"){
-            steps{
-                echo "Developer / Tester tests likh ke dega..."
-            }
-            
-        }
-        stage("Push to Docker Hub"){
-            steps{
-                script{
-                    docker_push("dockerHubCreds","two-tier-flask-app")
-                }  
+                echo "Image Pushing to Docker Hub!!"
+                withCredentials([usernamePassword(
+                    credentialsId:"dockerHubCreds",
+                    passwordVariable:"dockerHubPass",
+                    usernameVariable:"dockerHubUser"
+                    )]){
+                
+                sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPass}"
+                sh "docker image tag 2-tier-app:latest ${env.dockerHubUser}/2-tier-app:latest"
+                sh "docker push ${env.dockerHubUser}/2-tier-app:latest"
             }
         }
-        stage("Deploy"){
+        }
+        stage("Container's Creation"){
             steps{
-                sh "docker compose up -d --build flask-app"
+                echo "Container is Creating from the image available at Docker Hub"
+                sh "docker compose up -d"
             }
         }
+        
+        
     }
-
-post{
-        success{
-            script{
-                emailext from: 'mentor@trainwithshubham.com',
-                to: 'mentor@trainwithshubham.com',
-                body: 'Build success for Demo CICD App',
-                subject: 'Build success for Demo CICD App'
-            }
-        }
-        failure{
-            script{
-                emailext from: 'mentor@trainwithshubham.com',
-                to: 'mentor@trainwithshubham.com',
-                body: 'Build Failed for Demo CICD App',
-                subject: 'Build Failed for Demo CICD App'
-            }
-        }
-    }
+    
 }
