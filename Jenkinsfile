@@ -5,7 +5,7 @@ pipeline{
         stage("Project Cloning"){
             steps{
                 echo "Project Cloning is in Progress!!"
-                git url:"https://github.com/dharmeshludhani/two-tier-flask-app.git", branch:"master"
+                git url:"https://github.com/dharmeshludhani/two-tier-flask-app.git", branch:"practice"
             }
         }
         stage("Image Building"){
