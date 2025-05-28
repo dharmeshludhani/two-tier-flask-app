@@ -32,7 +32,7 @@ pipeline{
         stage("Container's Creation"){
             steps{
                 echo "Container is Creating from the image available at Docker Hub"
-                sh "docker-compose down "
+                
                 sh "docker-compose up -d "
             }
         }
