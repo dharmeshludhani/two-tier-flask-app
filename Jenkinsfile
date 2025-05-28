@@ -11,7 +11,7 @@ pipeline{
         stage("Image Building"){
             steps{
                 echo "Conatiner Image is in Building Process!!"
-                sh "docker build -t 2-tier-app-latest ."
+                sh "docker build -t --no-cache  two-tier-app-latest ."
             }
         }
         stage("Pushing image to Docker hub"){
