@@ -24,8 +24,8 @@ pipeline{
                     )]){
                 
                 sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPass}"
-                sh "docker image tag 2-tier-app:latest ${env.dockerHubUser}/2-tier-app:latest"
-                sh "docker push ${env.dockerHubUser}/2-tier-app:latest"
+                sh "docker image tag two-tier-app-latest:latest ${env.dockerHubUser}/two-tier-app-latest:latest"
+                sh "docker push ${env.dockerHubUser}/two-tier-app-latest:latest"
             }
         }
         }
