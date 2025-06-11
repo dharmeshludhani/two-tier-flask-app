@@ -22,7 +22,7 @@ services:
       timeout: 5s
 
   phpmyadmin:
-    image:
+    image: phpmyadmin/phpmyadmin:latest
     container_name: sql-ui
     environment:
       PMA_HOST: sql-server
