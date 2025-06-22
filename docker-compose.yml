@@ -55,7 +55,7 @@ Services:
         condition: service_helathy
 
 networks:
-  flask-net
+  flask-net:
 volumes:
-  flask-volume
+  flask-volume:
 
