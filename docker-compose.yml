@@ -1,28 +1,24 @@
 services:
   mysql:
-      image: mysql:latest
-      container_name: sql-server
-      environment:
-        MYSQL_USER: dham
-        MYSQL_PASSWORD: dham
-        MYSQL_ROOT_PASSWORD: admin
-        MYSQL_DATABASE: flask-db
-      ports:
-       - "3306:3306"
-      volumes:
-        - flask-volume:/var/lib/mysql
-      networks:
-        - flask-net
-
-      healthcheck:
-          test:["CMD", "mysqladmin", "ping" , "-h", "localhost" , "-uroot", "-padmin"]
-          interval:10s
-          retries:5
-          start_period:60s
-          timeout:5s
-
-
-
+    image: mysql:latest
+    container_name: sql-server
+    environment:
+      MYSQL_USER: dham
+      MYSQL_PASSWORD: dham
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: flask-db
+    ports:
+      - "3306:3306"
+    volumes:
+      - flask-volume:/var/lib/mysql
+    networks:
+      - flask-net
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-padmin"]
+      interval: 10s
+      retries: 5
+      start_period: 60s
+      timeout: 5s
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
@@ -33,29 +29,27 @@ services:
     ports:
       - "8080:80"
     networks:
-     - flask-net
+      - flask-net
 
-  flask-app: 
+  flask-app:
     build:
       context: .
     container_name: flask-app
-  environment:
-    MYSQL_HOST: sql-server
-    MYSQL_DB: flask-db
-    MYSQL_USER: dham
-    MYSQL_PASSWORD: dham
-
-  ports:
-    - "5000:5000"
-  networks:
-    - flask-net
-
-  depends_on:
+    environment:
+      MYSQL_HOST: sql-server
+      MYSQL_DB: flask-db
+      MYSQL_USER: dham
+      MYSQL_PASSWORD: dham
+    ports:
+      - "5000:5000"
+    networks:
+      - flask-net
+    depends_on:
       mysql:
         condition: service_healthy
 
 networks:
   flask-net:
+
 volumes:
   flask-volume:
-
