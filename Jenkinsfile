@@ -24,7 +24,7 @@ pipeline{
         }
         stage("Deployment Phase"){
             steps{
-                echo "Deployment stage"
+                echo "Flask Deployment stage"
             }
         }
     }
