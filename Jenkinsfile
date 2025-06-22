@@ -1,5 +1,5 @@
 pipeline{
-    agent {label "Dev"};
+    agent {label "dev"};
     
     stages{
         stage("Clean Worksapce"){
