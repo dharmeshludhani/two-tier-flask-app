@@ -1,0 +1,31 @@
+pipeline{
+    agent {label "dev"};
+    
+    stages{
+        stage("Clean Worksapce"){
+            steps{
+                cleanWs()
+            }
+        }
+        stage("Clone Repository"){
+            steps{
+                   git url:"https://github.com/dharmeshludhani/two-tier-flask-app.git/", branch: "deployment"
+            }
+        }
+        stage("Build Image"){
+            steps{
+                sh "docker build -t dharmeshludhani/flask-app:latest ."
+            }
+        }
+        stage("Push to Docker Hub"){
+            steps{
+                echo "Pushing Stage"
+            }
+        }
+        stage("Deployment Phase"){
+            steps{
+                echo "Deployment stage"
+            }
+        }
+    }
+}
