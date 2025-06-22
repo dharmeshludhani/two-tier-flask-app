@@ -9,7 +9,7 @@ pipeline{
         }
         stage("Clone Repository"){
             steps{
-                   git url:"https://github.com/dharmeshludhani/two-tier-flask-app.git/", branch: "deployment"
+                   git url:"https://github.com/dharmeshludhani/two-tier-flask-app.git/", branch: "Flask-Deployment"
             }
         }
         stage("Build Image"){
