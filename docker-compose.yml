@@ -1,61 +1,61 @@
-services:
+Services:
   mysql:
-    image: mysql:latest
-    container_name: sql-server
-    environment:
-      MYSQL_ROOT_PASSWORD: admin
-      MYSQL_USER: admin
-      MYSQL_PASSWORD: admin
-      MYSQL_DATABASE: flask-db
-    ports:
-     - "3306:3306"
-    volumes:
-     - flask-data:/var/lib/mysql
+      image: mysql:latest
+      container_name: sql-server
+      environment:
+        MYSQL_USER: dham
+        MYSQL_PASSWORD: dham
+        MYSQL_ROOT_PASSWORD: admin
+        MYSQL_DATABASE: flask-db
+      ports:
+       - "3306:3306"
+      volumes:
+        - flask-volume:/var/lib/mysql
+      network:
+        - flaks-net
 
-    networks:
-    - flask-tier
+      healtcheck:
+          test:["CMD", "mysqladmin", "ping" , "-h", "localhost" , "-uroot", "-padmin"]
+          interval:10s
+          retries:5
+          start_period:60s
+          timeout:5s
 
-    healthcheck:
-      test: [ "CMD","mysqladmin","ping", "-h", "localhost", "-uroot", "-padmin" ]
-      interval: 10s
-      retries: 5
-      start_period: 60s
-      timeout: 5s
+
+
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
-    container_name: sql-ui
+    container_name: SQL-UI
     environment:
       PMA_HOST: sql-server
-      PMA_PORTS: 3306
+      PMA_PORT: 3306
     ports:
       - "8080:80"
-    networks:
-      - flask-tier
+    network:
+     - flask-net
 
-  flask-app:
+  flask-app: 
     build:
       context: .
     container_name: flask-app
-    environment:
-      MYSQL_HOST: sql-server
-      MYSQL_USER: admin
-      MYSQL_PASSWORD: admin
-      MYSQL_DB: flask-db
-    ports:
-     - "5000:5000"
+  environment:
+    MYSQL_HOST: sql-server
+    MYSQL_DB: flask-db
+    MYSQL_USER: dham
+    MYSQL_PASSWORD: dham
 
-    networks:
-     - flask-tier
+  ports:
+    - "5000:5000"
+  networks:
+    - flask-net
 
-    depends_on:
-       mysql:
-         condition: service_healthy
-
+  depends_on:
+      mysql:
+        condition: service_helathy
 
 networks:
- flask-tier:
-
+  flask-net
 volumes:
- flask-data:
+  flask-volume
 
