@@ -11,10 +11,10 @@ services:
        - "3306:3306"
       volumes:
         - flask-volume:/var/lib/mysql
-      network:
-        - flaks-net
+      networks:
+        - flask-net
 
-      healtcheck:
+      healthcheck:
           test:["CMD", "mysqladmin", "ping" , "-h", "localhost" , "-uroot", "-padmin"]
           interval:10s
           retries:5
@@ -32,7 +32,7 @@ services:
       PMA_PORT: 3306
     ports:
       - "8080:80"
-    network:
+    networks:
      - flask-net
 
   flask-app: 
@@ -52,7 +52,7 @@ services:
 
   depends_on:
       mysql:
-        condition: service_helathy
+        condition: service_healthy
 
 networks:
   flask-net:
