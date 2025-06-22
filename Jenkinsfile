@@ -24,7 +24,8 @@ pipeline{
         }
         stage("Deployment Phase"){
             steps{
-                echo "Flask Deployment stage"
+                sh "docker compose down"
+                sh "docker compose up -d --build"
             }
         }
     }
