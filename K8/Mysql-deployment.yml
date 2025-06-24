@@ -1,0 +1,52 @@
+kind: Deployment
+apiVersion: apps/v1
+
+metadata:
+  name: mysql-depo
+  namespace: flask-ns
+  labels:
+    app: mysql-depo
+
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: sql-app
+
+  template:
+    metadata:
+      name: sql-app
+      namespace: flask-ns
+      labels:
+        app: sql-app
+
+    spec:
+      containers:
+      - name: sql-app
+        image: mysql:latest
+        ports:
+        - containerport: 3306
+        env:
+         - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+               secretKeyRef:
+                 name: mysql-Secret
+                 key: password
+
+          - name: MYSQL_DATABASE
+            valueFrom:
+              configMapKeyRef:
+                name: mysql-config
+                key: database
+
+          - name: MYSQL_USER
+            valueFrom:
+              configMapKeyRef:
+                name: mysql-config
+                key: user
+
+          - name: MYSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mysql-Secret
+                key: password         

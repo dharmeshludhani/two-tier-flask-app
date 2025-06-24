@@ -1,0 +1,13 @@
+kind: ConfigMap
+apiVersion: v1
+
+metadata:
+   name: mysql-config
+   namespace: flask-ns
+
+data:
+  database: flask-db
+  user: dham
+  mysql_host: mysql-depo
+  pma_host: mysql-Service
+  pma_port: "3306"

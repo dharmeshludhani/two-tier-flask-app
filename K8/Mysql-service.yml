@@ -1,0 +1,16 @@
+kind: Service
+apiVersion: v1
+
+metadata:
+  name: mysql-Service
+  namespace: flask-ns
+
+
+  spec:
+  selector:
+    app: mysql-depo
+  ports:
+  - protocol: TCP
+    port: 82
+    targetPort: 3306
+    

@@ -1,0 +1,13 @@
+kind: Pod
+apiVersion: v1
+
+metadata:
+  name: flask-Pod
+  namespace: flask-ns
+
+spec:
+  containers:
+    name: flask-container
+    image: dharmeshludhani/flask-app:latest
+    ports:
+    - containerPort: 5000

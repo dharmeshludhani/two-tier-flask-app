@@ -1,0 +1,35 @@
+kind: Deployment
+apiVersion: apps/v1
+
+metadata:
+  name: phpmyadmin-depo
+  namespace: flask-ns
+
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: sql-ui
+
+  template:
+    metadata:
+      name: sql-ui
+      namespace: flask-ns
+      labels:
+        app: sql-ui
+
+    spec:
+      containers:
+      - name: sql-ui
+        image: phpmyadmin/phpmyadmin:latest
+        ports:
+        - containerport: 80
+        env:
+        - name: PMA_HOST
+          value: mysql-Service  # This should match the name of your MySQL service
+        - name: PMA_PORT
+          value: "3306"  # Default MySQL port
+        - name: PMA_USER
+          value: root  # Default MySQL user
+        - name: PMA_PASSWORD
+          value: root  # Default MySQL password, change as needed 
