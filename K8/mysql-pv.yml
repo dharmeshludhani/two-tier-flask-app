@@ -1,0 +1,19 @@
+kind: PersistentVolume
+apiVersion: v1
+
+metadata:
+  name: mysql-pv
+  namespace: flask-ns
+
+spec:
+  storageClassName: standard
+
+  capacity:
+    storage: 2Gi
+
+    accessModes:
+      - ReadWriteOnce
+
+    hostPath:
+      path: /mnt/data
+      

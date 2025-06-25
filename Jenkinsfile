@@ -14,7 +14,7 @@ pipeline{
         }
         stage("Build Image"){
             steps{
-                sh "docker build -t dharmeshludhani/flask-app:latest ."
+                sh "docker build -t dharmeshludhani/flask-app:latest -f docker-compose/Dockerfile ."
             }
         }
         stage("Push to Docker Hub"){

@@ -26,3 +26,25 @@ spec:
         image: dharmeshludhani/flask-app:latest
         ports:
         - containerport: 5000
+
+    env:
+      - name: MYSQL_HOST
+        valueFrom:
+          configMapKeyRef:
+            name: flask-config
+            key: host
+      - name: MYSQL_DB
+        valueFrom:
+          configMapKeyRef:
+            name: flask-config
+            key: database
+      - name: MYSQL_USER
+        valueFrom:
+          configMapKeyRef:
+            name: flask-config
+            key: user
+      - name: MYSQL_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: flask-secret
+            key: password

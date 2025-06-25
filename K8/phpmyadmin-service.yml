@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+
+metadata:
+  name: phpmyadmin-service
+  namespace: flask-ns
+  
+
+spec:
+  selector:
+    app: mysql-service
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 80
