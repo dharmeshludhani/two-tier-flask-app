@@ -8,6 +8,6 @@ metadata:
 data:
   database: flask-db
   user: dham
-  mysql_host: mysql-depo
-  pma_host: mysql-Service
+  mysql_host: mysql-service
+  pma_host: mysql-service
   pma_port: "3306"

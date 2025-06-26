@@ -1,50 +1,43 @@
-kind: Deployment
 apiVersion: apps/v1
-
+kind: Deployment
 metadata:
-  name: Flask-Deployment
+  name: flask-deployment
   namespace: flask-ns
   labels:
-    app: Flask-app
-
+    app: flask-app
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app: flask-app
-
   template:
     metadata:
-      name: flask-app
-      namespace: flask-ns
       labels:
         app: flask-app
-
     spec:
       containers:
-      - name: flask-container
-        image: dharmeshludhani/flask-app:latest
-        ports:
-        - containerport: 5000
-
-    env:
-      - name: MYSQL_HOST
-        valueFrom:
-          configMapKeyRef:
-            name: flask-config
-            key: host
-      - name: MYSQL_DB
-        valueFrom:
-          configMapKeyRef:
-            name: flask-config
-            key: database
-      - name: MYSQL_USER
-        valueFrom:
-          configMapKeyRef:
-            name: flask-config
-            key: user
-      - name: MYSQL_PASSWORD
-        valueFrom:
-          secretKeyRef:
-            name: flask-secret
-            key: password
+        - name: flask-container
+          image: dharmeshludhani/flask-app
+          ports:
+            - containerPort: 5000
+          env:
+            - name: MYSQL_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-config
+                  key: mysql_host
+            - name: MYSQL_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-config
+                  key: database
+            - name: MYSQL_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-config
+                  key: user
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: password

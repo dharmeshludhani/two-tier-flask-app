@@ -1,16 +1,12 @@
-kind: Service
 apiVersion: v1
-
+kind: Service
 metadata:
-  name: mysql-Service
+  name: mysql-service
   namespace: flask-ns
-
-
-  spec:
+spec:
   selector:
-    app: mysql-depo
+    app: sql-app  # Must match the label of pods in your deployment
   ports:
-  - protocol: TCP
-    port: 82
-    targetPort: 3306
-    
+    - protocol: TCP
+      port: 82
+      targetPort: 3306

@@ -34,6 +34,7 @@ services:
   flask-app:
     build:
       context: .
+      dockerfile: ./Dockerfile-multistage
     container_name: flask-app
     environment:
       MYSQL_HOST: sql-server

@@ -1,16 +1,12 @@
-kind: PersistentVolumeClaim
 apiVersion: v1
-
+kind: PersistentVolumeClaim
 metadata:
   name: mysql-pvc
   namespace: flask-ns
-
 spec:
   storageClassName: standard
-
   accessModes:
     - ReadWriteOnce
-
-  recources:
-      requests:
-        storage:  1Gi 
+  resources:
+    requests:
+      storage: 1Gi
