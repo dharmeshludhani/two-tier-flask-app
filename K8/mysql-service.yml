@@ -8,5 +8,5 @@ spec:
     app: sql-app  # Must match the label of pods in your deployment
   ports:
     - protocol: TCP
-      port: 82
+      port: 3306
       targetPort: 3306

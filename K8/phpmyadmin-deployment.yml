@@ -22,6 +22,12 @@ spec:
             - containerPort: 80  # ✅ Fixed key
           env:
             - name: PMA_HOST
-              value: mysql-service  # ✅ Service name should be lowercase and match exactly
+              valueFrom:
+                configMapKeyRef:
+                  name:  mysql-config
+                  key:   pma_host
             - name: PMA_PORT
-              value: "3306"
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-config
+                  key: pma_port
